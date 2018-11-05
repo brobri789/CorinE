@@ -19,26 +19,18 @@
 	{
 		userPassword = (String) request.getParameter("userPassword");
 	}
-	  
-	if(userID.equals("") || userPassword.equals(""));
-	{
-		PrintWriter script = response.getWriter();
-		script.println("<script>");
-		script.println("alert('존재하지 않는 아이디입니다.');");
-		script.println("history.back();");
-		script.println("</script>");   
-		script.close();
-	}
 	
+	 
 	
 	UserDAO userDAO = new UserDAO();
-	int result = userDAO.login(userID, userPassword);
-	if (result == 1) {
+	int result2 = userDAO.login(userID, userPassword);
+	if (result2 == 1) 
+	{
 
 		session.setAttribute("userID", userID);
 
 		PrintWriter script = response.getWriter();
-
+ 
 		script.println("<script>");
 
 		script.println("location.href='index.jsp'");
@@ -47,7 +39,8 @@
 
 		script.close();
 
-	} else if (result == 0) {
+	} else if (result2 == 0)
+	{
 
 		PrintWriter script = response.getWriter();
 
@@ -61,7 +54,8 @@
 
 		script.close();
 
-	} else if (result == -1) {
+	} else if (result2 == -1)
+	{
 
 		PrintWriter script = response.getWriter();
 
@@ -75,7 +69,8 @@
 
 		script.close();
 
-	} else if (result == -2) {
+	} else if (result2 == -2) 
+	{
 
 		PrintWriter script = response.getWriter();
 

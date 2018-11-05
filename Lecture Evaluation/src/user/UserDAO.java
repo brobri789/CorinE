@@ -2,7 +2,7 @@ package user;
 
 
 
-import java.sql.Connection;
+import java.sql.Connection; 
 
 import java.sql.DriverManager;
 
@@ -14,15 +14,14 @@ import java.sql.SQLException;
 
 import util.DatabaseUtil;
 
-
-
 public class UserDAO
 {
 	
 	
  public int login(String userID, String userPassword) 
- {
-	String SQL = "SELECT userPassword FROM USER WHERE userID =?";
+ {	
+	int result2; 
+	String SQL = "SELECT userPassword FROM USER WHERE userID =? ";
 	Connection conn = null;
 	PreparedStatement pstmt = null;
 	ResultSet rs = null;
@@ -34,17 +33,18 @@ public class UserDAO
 		rs = pstmt.executeQuery();
 		if(rs.next()) 
 		{
+			System.out.println( rs.getString(1));
 			 if(rs.getString(1).equals(userPassword)) 
 			 {
-				 return 1; // 로그인 성공
+				return result2 = 1;
 			 }
 			 else 
 			 {
-				 return 0; //비밀번호 오류
+				 return result2 = 0;
 			 }
 		}
-		return -1; // 아이디없음
 	} 
+	
 		catch (Exception e) 
 		{ 
 		  e.printStackTrace();
@@ -77,12 +77,12 @@ public class UserDAO
 				e.printStackTrace();
 			}
 	}
-	 return -2; //데이터 베이스 오류
-	 
+	 return result2 = -2; //데이터 베이스 오류
  } // end -  login.
  
  public int join(UserDTO user) 
- {
+ { 
+	int result2; 
 	String SQL = "INSERT INTO USER VALUES (?, ?, ?, ?, false) ";
 	Connection conn = null;
 	PreparedStatement pstmt = null;
@@ -129,12 +129,13 @@ public class UserDAO
 				e.printStackTrace();
 			}
 	}
-	 return -1; //회원가입 실패
+	 return result2 = -2;//회원가입 실패
 	 
  } // end -  join
 
  public boolean getUserEmailChecked(String userID) 
  {
+	 int result2;
 	String SQL = "SELECT userEmailChecked FROM USER WHERE userID =?";
 	Connection conn = null;
 	PreparedStatement pstmt = null;
@@ -146,8 +147,8 @@ public class UserDAO
 		pstmt.setString(1, userID);
 		rs = pstmt.executeQuery();
 		if(rs.next()) 
-		{
-			return rs.getBoolean(1);
+		{  
+			
 		}
 	}
 		catch (Exception e) 
@@ -188,6 +189,7 @@ public class UserDAO
  
  public boolean setUserEmailChecked(String userID) 
  {
+	 int result2;
 	String SQL = "UPDATE USER SET userEmailChecked = true WHERE userID=?";
 	Connection conn = null;
 	PreparedStatement pstmt = null;
@@ -239,6 +241,7 @@ public class UserDAO
  
  public String getUserEmail(String userID) 
  {
+	 int result2;
 	 String SQL = "SELECT userEmail FROM USER WHERE userID =?";
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -289,8 +292,6 @@ public class UserDAO
 		return null; // 데이터 베이스 오류
 		 
 	 } // end -  getUserEmail 
-
- 
 	
 } //end - public class UserDAO
 

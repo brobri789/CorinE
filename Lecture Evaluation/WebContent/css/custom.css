@@ -1,5 +1,4 @@
 @import url(https://fonts.googleapis.com/earlyaccess/jejugothic.css);
-@import url(https://fonts.googleapis.com/earlyaccess/Nanumgothic.css);
 
 .navbar-brand, h1, h2, h3, h4
 {
@@ -9,8 +8,4 @@ h5
 {
 	font-family: "Jeju Gothic";
 	font-size: 18px;
-}
-body 
-{
-	font-family: "Nanum Gothic";
 }

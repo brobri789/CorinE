@@ -23,30 +23,37 @@ public class UserDTO
 	{
 		return userPassword;
 	}
+	
 	public void setUserPassword(String userPassword)
 	{
 		this.userPassword = userPassword;
 	}
+	
 	public String getUserEmail()
 	{
 		return userEmail;
 	}
+	
 	public void setUserEmail(String userEmail) 
 	{
 		this.userEmail = userEmail;
 	}
+	
 	public String getUserEmailHash()
 	{
 		return userEmailHash;
 	}
+	
 	public void setUserEmailHash(String userEmailHash)
 	{
 		this.userEmailHash = userEmailHash;
 	}
+	
 	public boolean isUserEmailChecked() 
 	{
 		return userEmailChecked;
 	}
+	
 	public void setUserEmailChecked(boolean userEmailChecked) 
 	{
 		this.userEmailChecked = userEmailChecked;
@@ -56,7 +63,6 @@ public class UserDTO
 	{
 		
 	}
-	
 		
 	public UserDTO(String userID, String userPassword, String userEmail, String userEmailHash,
 			boolean userEmailChecked)
@@ -68,8 +74,4 @@ public class UserDTO
 		this.userEmailHash = userEmailHash;
 		this.userEmailChecked = userEmailChecked;
 	}
-	
-	
-	
-	
 }

@@ -30,17 +30,12 @@ public class DatabaseUtil
 
 			return DriverManager.getConnection(dbURL,dbID,dbPassword);
 
-			
-
 		} 
-
 		catch (Exception e) 
 
 		{
 
 			e.printStackTrace();
-
-			
 
 		}
 

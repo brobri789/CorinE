@@ -2,68 +2,60 @@
 <%@ page import="java.io.PrintWriter"%>
 <%@ page import="user.UserDAO"%>
 
-<!doctype html>
+<%
+	String userID = (String)(session.getAttribute("userID"));
+	boolean emailChecked = new UserDAO().getUserEmailChecked(userID);
+%>
+<!doctype html> 
 <html>
   <head>
     <title>강의평가 웹 사이트</title>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <!-- 부트스트랩 CSS 추가하기 -->
-    <link rel="stylesheet" href="./css/bootstrap.min.css">
-    <!-- 커스텀 CSS 추가하기 -->
-    <link rel="stylesheet" href="./css/custom.css">
+	<jsp:include page="/include.jsp" flush="true"/>
   </head>
   <body>
   
-  <%
-
-	String userID = null;
-	if(session.getAttribute("userID") != null) 
-	{
-		userID = (String) session.getAttribute("userID");
-	}
-
-	if(userID == null)
-	{
-		PrintWriter script = response.getWriter();
-		script.println("<script>");
-		script.println("alert('로그인을 해주세요.');");
-		script.println("location.href = 'userLogin.jsp'");
-		script.println("</script>");
-		script.close();	
-	}
-
-	boolean emailChecked = new UserDAO().getUserEmailChecked(userID);
-	if(emailChecked == false) 
-	{
-		PrintWriter script = response.getWriter();
-		script.println("<script>");
-		script.println("location.href = 'emailSendConfirm.jsp'");
-		script.println("</script>");
-		script.close();		
-		return;
-	}
-
-%>
-  
- 	<nav class="navbar navbar-expand-lg navbar-light bg-light">.
+<script type="text/javascript">
+var userId = '<%= userID %>';
+var emailCheck = '<%= emailChecked%>';
+if(userId == undefinded || userId == '')
+{
+	alert("로그인을 해주세요.");
+	location.href = 'userLogin.jsp';
+}
+if(emailCheck == undefinded || emailCheck == '')
+{
+	location.href = 'emailSendConfirm.jsp';
+}
+</script>
+ 	<nav class="navbar navbar-expand-lg navbar-light bg-light">
 		<a class="navbar-brand" href="index.jsp">강의평가 웹 사이트</a>
 		<button class ="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar">
 		 	<span class = "navbar-toggler-icon"></span>
 		</button>
+		
 		<div id="navbar" class="collapse navbar-collapse">
 			<ul class = "navbar-nav mr-auto">	
-			  <li class = "nav-item ative"> <a class = "nav-link " href="index.jsp">메인</a></li>
+			  <li class = "nav-item ative"> <a class = "nav-link" href="index.jsp">메인</a></li>
 			<li class = "nav-item dropdown">
 			<a class = "nav-link dropdown-toggle" id ="dropdown" data-toggle="dropdown">회원관리</a>
-					<div class="dropdown-menu" aria-labelledby="dropdown">
-<% if(userID == null) { %>
-
-						<a class = "dropdown-item" href="userLogin.jsp">로그인</a>
-						<a class = "dropdown-item  " href="userJoin.jsp">회원가입</a>
-<% } else {	%>			
-						 <a class = "dropdown-item" href="userLogout.jsp">로그아웃</a>
-<% } %>
+			
+			<div class="dropdown-menu" aria-labelledby="dropdown">
+<%
+	if(userID == null) 
+	{
+%>
+              <a class="dropdown-item" href="userLogin.jsp">로그인</a>
+              <a class="dropdown-item" href="userRegister.jsp">회원가입</a>
+<%
+	} 
+	else 
+	{
+%>
+              <a class="dropdown-item" href="userLogout.jsp">로그아웃</a>
+<%
+	}
+%>
 					</div>
 				</li>
 			</ul>
@@ -73,6 +65,7 @@
 			</form>
 		</div>
 	</nav> 	
+	
     <div class="container">
       <form method="get" action="./index.jsp" class="form-inline mt-3">
         <select name="lectureDivide" class="form-control mx-1 mt-2">
@@ -93,7 +86,7 @@
             <div class="col-4 text-right">
               종합 <span style="color: red;">A</span>
             </div>
-          </div>
+          </div> 
         </div>
         <div class="card-body">
           <h5 class="card-title">
@@ -179,6 +172,7 @@
         <a class="page-link" href="#">다음</a>
       </li>
     </ul>
+    
     <div class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="modal" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
@@ -188,6 +182,7 @@
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
+          
           <div class="modal-body">
             <form action="./evaluationRegisterAction.jsp" method="post">
               <div class="form-row">
@@ -200,6 +195,7 @@
                   <input type="text" name="professorName" class="form-control" maxlength="20">
                 </div>
               </div>
+              
               <div class="form-row">
                 <div class="form-group col-sm-4">
                   <label>수강 연도</label>
@@ -237,15 +233,17 @@
                   </select>
                 </div>
               </div>
+              
               <div class="form-group">
                 <label>제목</label>
                 <input type="text" name="evaluationTitle" class="form-control" maxlength="20">
               </div>
               <div class="form-group">
                 <label>내용</label>
-                <textarea type="text" name="evaluationContent" class="form-control" maxlength="2048" style="height: 180px;"></textarea>
+                <textarea name="evaluationContent" class="form-control" maxlength="2048" style="height: 180px;"></textarea>
               </div>
               <div class="form-row">
+              
                 <div class="form-group col-sm-3">
                   <label>종합</label>
                   <select name="totalScore" class="form-control">
@@ -256,6 +254,7 @@
                     <option value="F">F</option>
                   </select>
                 </div>
+                
                 <div class="form-group col-sm-3">
                   <label>성적</label>
                   <select name="creditScore" class="form-control">
@@ -266,6 +265,7 @@
                     <option value="F">F</option>
                   </select>
                 </div>
+                
                 <div class="form-group col-sm-3">
                   <label>널널</label>
                   <select name="comfortableScore" class="form-control">
@@ -296,6 +296,7 @@
         </div>
       </div>
     </div>
+    
     <div class="modal fade" id="reportModal" tabindex="-1" role="dialog" aria-labelledby="modal" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
@@ -305,7 +306,9 @@
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
+          
           <div class="modal-body">
+          
             <form method="post" action="./reportAction.jsp">
               <div class="form-group">
                 <label>신고 제목</label>
@@ -313,13 +316,14 @@
               </div>
               <div class="form-group">
                 <label>신고 내용</label>
-                <textarea type="text" name="reportContent" class="form-control" maxlength="2048" style="height: 180px;"></textarea>
+                <textarea name="reportContent" class="form-control" maxlength="2048" style="height: 180px;"></textarea>
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
                 <button type="submit" class="btn btn-danger">신고하기</button>
               </div>
             </form>
+            
           </div>
         </div>
       </div>
@@ -327,11 +331,5 @@
     <footer class="bg-dark mt-4 p-5 text-center" style="color: #FFFFFF;">
       Copyright ⓒ 2018  All Rights Reserved.
     </footer>
-    <!-- 제이쿼리 자바스크립트 추가하기 -->
-    <script src="./js/jquery.min.js"></script>
-    <!-- Popper 자바스크립트 추가하기 -->
-    <script src="./js/popper.min.js"></script>
-    <!-- 부트스트랩 자바스크립트 추가하기 -->
-    <script src="./js/bootstrap.min.js"></script>
   </body>
 </html>
